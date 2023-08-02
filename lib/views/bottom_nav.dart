@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
 import 'package:health_care_app/views/home_page.dart';
 import 'package:health_care_app/views/widgets/top_indicator.dart';
 
@@ -48,6 +47,7 @@ class _BottomNavState extends State<BottomNav> with TickerProviderStateMixin {
             color: Colors.white,
           ),
           child: TabBar(
+            physics: NeverScrollableScrollPhysics(),
             onTap: (val) {
               setState(() {
                 _currentIndex = val;

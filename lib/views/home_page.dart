@@ -14,8 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Items>? programs;
-  List<Item>? lessons;
+  List<Items> programs = [];
+  List<Item> lessons = [];
   var width, height;
 
   @override
@@ -328,10 +328,10 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    itemCount: programs!.length,
+                    itemCount: programs.length,
                     itemBuilder: (context, index) {
                       return CustomProgram(
-                        items: programs![index],
+                        items: programs[index],
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -392,10 +392,10 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    itemCount: lessons!.length,
+                    itemCount: lessons.length,
                     itemBuilder: (context, index) {
                       return CustomEvents(
-                        item: lessons![index],
+                        item: lessons[index],
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -456,10 +456,10 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    itemCount: lessons!.length,
+                    itemCount: lessons.length,
                     itemBuilder: (context, index) {
                       return CustomLessons(
-                        item: lessons![index],
+                        item: lessons[index],
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -488,7 +488,7 @@ class _HomePageState extends State<HomePage> {
         print(response.data);
         var list = Programs.fromJson(response.data);
         setState(() {
-          programs = list.items;
+          programs = list.items!;
         });
       } else {
         print(response.statusCode);
@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
         print(response.data);
         var list = Lessons.fromJson(response.data);
         setState(() {
-          lessons = list.items;
+          lessons = list.items!;
         });
       } else {
         print(response.statusCode);
