@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:health_care_app/models/Lessons.dart';
+import 'package:health_care_app/models/Programs.dart';
 import 'package:health_care_app/views/widgets/custom_events.dart';
 import 'package:health_care_app/views/widgets/custom_lessons.dart';
 import 'package:health_care_app/views/widgets/custom_program.dart';
@@ -11,7 +14,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Items>? programs;
+  List<Item>? lessons;
   var width, height;
+
+  @override
+  void initState() {
+    super.initState();
+    getPrograms();
+    getLessons();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -313,24 +325,20 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   height: 285,
                   margin: EdgeInsets.only(left: 16, right: 16),
-                  child: ListView(
+                  child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    children: [
-                      CustomProgram(),
-                      SizedBox(
+                    itemCount: programs!.length,
+                    itemBuilder: (context, index) {
+                      return CustomProgram(
+                        items: programs![index],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
                         width: 12,
-                      ),
-                      CustomProgram(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      CustomProgram(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      CustomProgram(),
-                    ],
+                      );
+                    },
                   ),
                 ),
                 SizedBox(
@@ -379,26 +387,22 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
                 Container(
-                  height: 285,
+                  height: 295,
                   margin: EdgeInsets.only(left: 16, right: 16),
-                  child: ListView(
+                  child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    children: [
-                      CustomEvents(),
-                      SizedBox(
+                    itemCount: lessons!.length,
+                    itemBuilder: (context, index) {
+                      return CustomEvents(
+                        item: lessons![index],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
                         width: 12,
-                      ),
-                      CustomEvents(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      CustomEvents(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      CustomEvents(),
-                    ],
+                      );
+                    },
                   ),
                 ),
                 SizedBox(
@@ -447,26 +451,22 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
                 Container(
-                  height: 285,
+                  height: 295,
                   margin: EdgeInsets.only(left: 16, right: 16),
-                  child: ListView(
+                  child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    children: [
-                      CustomLessons(),
-                      SizedBox(
+                    itemCount: lessons!.length,
+                    itemBuilder: (context, index) {
+                      return CustomLessons(
+                        item: lessons![index],
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
                         width: 12,
-                      ),
-                      CustomLessons(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      CustomLessons(),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      CustomLessons(),
-                    ],
+                      );
+                    },
                   ),
                 ),
                 SizedBox(
@@ -478,5 +478,41 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void getPrograms() async {
+    try {
+      var response = await Dio()
+          .get("https://632017e19f82827dcf24a655.mockapi.io/api/programs");
+      if (response.statusCode == 200) {
+        print(response.data);
+        var list = Programs.fromJson(response.data);
+        setState(() {
+          programs = list.items;
+        });
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getLessons() async {
+    try {
+      var response = await Dio()
+          .get("https://632017e19f82827dcf24a655.mockapi.io/api/lessons");
+      if (response.statusCode == 200) {
+        print(response.data);
+        var list = Lessons.fromJson(response.data);
+        setState(() {
+          lessons = list.items;
+        });
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

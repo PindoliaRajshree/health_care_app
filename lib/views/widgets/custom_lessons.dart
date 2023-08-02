@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_app/models/Lessons.dart';
 
 class CustomLessons extends StatelessWidget {
-  const CustomLessons({Key? key}) : super(key: key);
+  final Item item;
+
+  const CustomLessons({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 242,
-      height: 280,
+      height: 290,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -33,7 +36,7 @@ class CustomLessons extends StatelessWidget {
           ),
           Container(
             width: 242,
-            height: 140,
+            height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(8),
@@ -50,7 +53,7 @@ class CustomLessons extends StatelessWidget {
                   height: 16,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Babycare'.toUpperCase(),
+                    item.category!.toUpperCase(),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Color.fromRGBO(89, 139, 237, 1),
@@ -65,10 +68,10 @@ class CustomLessons extends StatelessWidget {
                   height: 15,
                 ),
                 Container(
-                  height: 48,
+                  height: 57,
                   width: 218,
                   child: Text(
-                    'Understanding of human behaviour',
+                    item.name!,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
@@ -90,7 +93,7 @@ class CustomLessons extends StatelessWidget {
                       width: 144,
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '3 min',
+                        '${item.duration!} min',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           color: Color.fromRGBO(109, 116, 122, 1),

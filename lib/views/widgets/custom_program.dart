@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:health_care_app/models/Programs.dart';
 
 class CustomProgram extends StatelessWidget {
-  const CustomProgram({Key? key}) : super(key: key);
+  final Items items;
+
+  const CustomProgram({Key? key, required this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class CustomProgram extends StatelessWidget {
                   height: 16,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Lifestyle'.toUpperCase(),
+                    items.category!.toUpperCase(),
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Color.fromRGBO(89, 139, 237, 1),
@@ -68,7 +71,7 @@ class CustomProgram extends StatelessWidget {
                   height: 48,
                   width: 218,
                   child: Text(
-                    'A complete guide for your new born baby',
+                    items.name!,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
@@ -87,7 +90,7 @@ class CustomProgram extends StatelessWidget {
                   height: 16,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '16 lessons',
+                    '${items.lesson!} lessons',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Color.fromRGBO(109, 116, 122, 1),
